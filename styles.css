@@ -1,0 +1,238 @@
+/* ==========================================
+   1. GLOBAL STYLES & CORE VARIABLES
+   ========================================== */
+:root {
+    --amber-badge: #ffb000;
+    --green-badge: #28a745;
+    --gray-badge: #6c757d;
+    --blue-badge: #007bff;
+    --transition-smooth: all 0.3s ease;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+}
+
+/* ==========================================
+   2. NAVIGATION & CSS-ONLY DRAWER HACK
+   ========================================== */
+/* Hide the mobile drawer by default using positioning */
+.mobile-drawer {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: -4px 0 15px rgba(0,0,0,0.05);
+    transition: var(--transition-smooth);
+    z-index: 1040;
+}
+
+/* The Magic Trick: When checkbox is checked, slide the menu in */
+#menu-toggle:checked ~ .mobile-drawer {
+    right: 0;
+}
+
+/* ==========================================
+   3. HERO SECTION (Gradients & Frosted Glass)
+   ========================================== */
+.hero-section {
+    position: relative;
+    /* Layered complex background with a simulated soft blob shape effect */
+    background: 
+        radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.15), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(255, 176, 0, 0.1), transparent 40%),
+        linear-gradient(135deg, #e9ecef 0%, #ffffff 100%);
+    border-radius: 24px;
+    padding: 2rem;
+}
+
+/* Frosted Glass Card Implementation */
+.frosted-glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================
+   4. ABOUT SECTION (CSS Grid Layout)
+   ========================================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ==========================================
+   5. ROADMAP SECTION (Vertical Timeline Layout)
+   ========================================== */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 100%;
+    width: 2px;
+    background-color: #dee2e6;
+}
+
+.timeline-circle {
+    width: 42px;
+    height: 42px;
+    background-color: #007bff;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+/* ==========================================
+   6. COURSES SLIDER (CSS Grid & Scroll Snap)
+   ========================================== */
+.course-slider-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(300px, 1fr);
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Hide standard scrollbar for clean slider feel */
+    padding: 1rem .5rem;
+}
+
+.course-slider-track::-webkit-scrollbar {
+    display: none; /* Hide Chrome/Safari scrollbar */
+}
+
+.course-card {
+    scroll-snap-align: start;
+    transition: var(--transition-smooth);
+}
+
+/* Course Card Hover Effects: Lifts up and casts a distinct soft shadow */
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+}
+
+/* Specific Course Rubric Badges Colors */
+.badge-amber { background-color: var(--amber-badge); color: #fff; }
+.badge-green { background-color: var(--green-badge); color: #fff; }
+.badge-gray  { background-color: var(--gray-badge); color: #fff; }
+.badge-blue  { background-color: var(--blue-badge); color: #fff; }
+
+/* Customizing the HTML summary element under course cards */
+.days-left-details summary {
+    list-style: none;
+    outline: none;
+    cursor: pointer;
+}
+.days-left-details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Slider navigation tracking indicators */
+.slider-dot-btn {
+    width: 12px;
+    height: 12px;
+    background-color: #dee2e6;
+    transition: var(--transition-smooth);
+}
+.slider-dot-btn:hover {
+    background-color: #007bff;
+}
+
+/* ==========================================
+   7. FAQ ACCORDION CUSTOM STYLING
+   ========================================== */
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+.faq-item[open] summary i {
+    transform: rotate(180deg);
+}
+.faq-item summary i {
+    transition: var(--transition-smooth);
+}
+
+/* ==========================================
+   8. FOOTER SECTION (CSS Grid Layout)
+   ========================================== */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* ==========================================
+   9. INTERACTIVE COMPONENTS & CUSTOM UTILITIES
+   ========================================== */
+/* Smooth pill shape transition scale/color utility for buttons */
+.rounded-pill {
+    transition: var(--transition-smooth);
+}
+.btn-primary.rounded-pill:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+.btn-outline-dark.rounded-pill:hover {
+    background-color: #212529;
+    color: #fff;
+}
+
+/* Responsive Overrides via Media Queries */
+@media (max-width: 767.98px) {
+    .hero-section {
+        padding: 1.5rem;
+    }
+    .course-slider-track {
+        grid-auto-columns: minmax(260px, 1fr); /* Slightly tighter cards on smaller screen views */
+    }
+}
+
+/* ==========================================
+   FORCE HORIZONTAL SCROLL (ANTI-CONFLICT)
+   ========================================== */
+.custom-slider-container {
+    display: flex !important; 
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important; 
+    padding: 1.5rem 0.5rem;
+    gap: 1.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; 
+}
+
+
+.custom-slider-container::-webkit-scrollbar {
+    height: 8px;
+    display: block !important;
+}
+.custom-slider-container::-webkit-scrollbar-track {
+    background: #e9ecef;
+    border-radius: 10px;
+}
+.custom-slider-container::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+
+.custom-slider-card {
+    flex: 0 0 320px !important; 
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    transition: var(--transition-smooth);
+}
+
+.custom-slider-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+}
+
+@media (max-width: 576px) {
+    .custom-slider-card {
+        flex: 0 0 280px !important;
+    }
+}
